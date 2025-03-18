@@ -2,7 +2,8 @@
 
 #define SYMBOLS 3
 
-SlotMachine::SlotMachine(int numOfWheels) : numberOfWheels(numOfWheels) {
+SlotMachine::SlotMachine(int numOfWheels, int accSteps) : numberOfWheels(numOfWheels),
+	accelerationSteps(accSteps), accelerationCounter(accelerationSteps), spinning(false) {
 	std::random_device rd;
 	std::mt19937 gen(rd());
 
@@ -12,15 +13,17 @@ SlotMachine::SlotMachine(int numOfWheels) : numberOfWheels(numOfWheels) {
 }
 
 void SlotMachine::start() {
+	accelerationCounter = accelerationSteps;
 	for (auto& wheel : wheels) {
 		wheel.start();
 	}
 }
 
-void SlotMachine::accelerate() {
+bool SlotMachine::accelerate() {
 	for (auto& wheel : wheels) {
 		wheel.speedUp();
 	}
+	return --accelerationCounter == 0;
 }
 
 bool SlotMachine::decelerate() {
@@ -34,14 +37,10 @@ bool SlotMachine::decelerate() {
 	return stopped == numberOfWheels;
 }
 
-std::vector<double> SlotMachine::spin() {
-	std::vector<double> elapsed;
-
+void SlotMachine::spin() {
 	for (auto& wheel : wheels) {
-		elapsed.push_back(wheel.spin());
+		wheel.spin();
 	}
-	
-	return elapsed;
 }
 
 std::vector<std::vector<int>> SlotMachine::getPositions() const {
@@ -52,4 +51,18 @@ std::vector<std::vector<int>> SlotMachine::getPositions() const {
 	}
 
 	return positions;
+}
+
+std::vector<double> SlotMachine::getShifts() const {
+	std::vector<double> shifts;
+
+	for (const auto& wheel : wheels) {
+		shifts.push_back(wheel.getShift());
+	}
+
+	return shifts;
+}
+
+bool SlotMachine::isSpinning() const {
+	return spinning;
 }

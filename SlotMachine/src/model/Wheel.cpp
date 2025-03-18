@@ -59,7 +59,7 @@ void Wheel::stop() {
 	wheelSpeed = 0;
 }
 
-double Wheel::spin() {
+void Wheel::spin() {
 	double res = 0;
 
 	if (wheelSpeed) {
@@ -83,9 +83,9 @@ double Wheel::spin() {
 		lastUpdate = now;
 
 		res = (double)timeAccumulator / timeToSpin;
-
-		//std::cout << timeAccumulator << '/' << timeToSpin << '=' << res << '\n';
 	}
+}
 
-	return res;
+double Wheel::getShift() const {
+	return wheelSpeed ? (double)timeAccumulator / 1000.0 * wheelSpeed : 0;
 }

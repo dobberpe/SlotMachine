@@ -22,6 +22,7 @@ public:
 	void speedUp();
 	bool speedDown();
 	void stop();
-	double spin();
+	void spin();
+	double getShift() const;
 };
 
