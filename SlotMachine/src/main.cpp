@@ -1,12 +1,15 @@
-#include <iostream>
+//#include <iostream>
 #include "controller/SMController.h"
+#include "utils/Logger.h"
 
 int main() {
     try {
         SMController controller;
         controller.run();
     } catch (std::exception& e) {
-        std::cerr << e.what() << '\n';
+        // разместить catch выше
+        Logger::getInstance() << Logger::CONTROLLER << Logger::ERROR << e.what();
+        //std::cerr << e.what() << '\n';
     }
 
     return 0;

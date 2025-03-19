@@ -37,6 +37,12 @@
     <Filter Include="Файлы заголовков\model\fsm">
       <UniqueIdentifier>{bdb9e570-c76b-4fe3-863b-0db065420f01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\utils">
+      <UniqueIdentifier>{d9b44218-100d-4777-905a-2b0610ed1bc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\utils">
+      <UniqueIdentifier>{9405225b-c066-40b4-9bae-e7cc364b532e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -74,6 +80,9 @@
     </ClInclude>
     <ClInclude Include="src\model\fsm\FSM.h">
       <Filter>Файлы заголовков\model\fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\Logger.h">
+      <Filter>Файлы заголовков\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +123,9 @@
     </ClCompile>
     <ClCompile Include="src\model\fsm\FSM.cpp">
       <Filter>Исходные файлы\model\fsm</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\Logger.cpp">
+      <Filter>Исходные файлы\utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

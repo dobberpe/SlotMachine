@@ -3,11 +3,6 @@
 #include "Wheel.h"
 
 class SlotMachine {
-private:
-	int numberOfWheels;
-	std::vector<Wheel> wheels;
-
-	double randomDouble(std::mt19937& gen, double min, double max) const;
 
 public:
 	SlotMachine() = delete;
@@ -16,9 +11,13 @@ public:
 	~SlotMachine() = default;
 	void start();
 	void stop();
-	/*bool accelerate();
-	bool decelerate();*/
 	bool spin();
 	std::vector<std::vector<double>> getPositions() const;
+
+private:
+	double randomDouble(std::mt19937& gen, double min, double max) const;
+	
+	int numberOfWheels;
+	std::vector<Wheel> wheels;
 };
 

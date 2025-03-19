@@ -5,7 +5,7 @@
 #include <iostream>
 
 #define BUTTON_SIZE { 200, 200 }
-#define FONT_FILE "arial.ttf"
+#define FONT_FILE "assets/fonts/arial.ttf"
 #define BUTTON_POS { 500, 800 }
 #define SPIN "SPIN"
 #define STOP "STOP"

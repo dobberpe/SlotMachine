@@ -5,9 +5,9 @@
 #include <iostream>
 
 #define SYMBOLS 3
-#define SEVEN_FILE "seven.png"
-#define LEMON_FILE "lemon.png"
-#define CHERRIES_FILE "cherries.png"
+#define SEVEN_FILE "assets/img/seven.png"
+#define LEMON_FILE "assets/img/lemon.png"
+#define CHERRIES_FILE "assets/img/cherries.png"
 
 #define WIDTH 200
 #define HEIGHT 600

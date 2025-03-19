@@ -17,9 +17,12 @@ private:
 	double accelFactor; // скорость разгона
 	double decelFactor; // скорость торможения
 	std::chrono::steady_clock::time_point startTime;
-	//long long timeAccumulator;
 	bool spinning;
 	bool slowingDown;
+	bool stopping;
+	bool backwards;
+
+	bool stopped() const;
 
 public:
 	Wheel() = delete;

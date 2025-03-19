@@ -145,6 +145,7 @@
     <ClInclude Include="src\model\fsm\WaitingState.h" />
     <ClInclude Include="src\model\SlotMachine.h" />
     <ClInclude Include="src\model\Wheel.h" />
+    <ClInclude Include="src\utils\Logger.h" />
     <ClInclude Include="src\view\SMWindow.h" />
     <ClInclude Include="src\view\WheelView.h" />
   </ItemGroup>
@@ -161,6 +162,7 @@
     <ClCompile Include="src\model\fsm\WaitingState.cpp" />
     <ClCompile Include="src\model\SlotMachine.cpp" />
     <ClCompile Include="src\model\Wheel.cpp" />
+    <ClCompile Include="src\utils\Logger.cpp" />
     <ClCompile Include="src\view\SMWindow.cpp" />
     <ClCompile Include="src\view\WheelView.cpp" />
   </ItemGroup>

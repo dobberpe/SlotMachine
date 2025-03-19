@@ -1,14 +1,7 @@
 ﻿#include "SlotMachine.h"
-
-#include <iostream>
+#include "../utils/Logger.h"
 
 #define SYMBOLS 3
-
-double SlotMachine::randomDouble(std::mt19937& gen, double min, double max) const {
-	std::uniform_real_distribution<double> dist(min, max);
-
-	return dist(gen);
-}
 
 SlotMachine::SlotMachine(int numOfWheels) : numberOfWheels(numOfWheels) {
 	std::random_device rd;
@@ -17,18 +10,22 @@ SlotMachine::SlotMachine(int numOfWheels) : numberOfWheels(numOfWheels) {
 	for (int i = 0; i < numberOfWheels; ++i) {
 		wheels.push_back(Wheel(SYMBOLS, gen, 0.0, randomDouble(gen, 12.0, 15.0), randomDouble(gen, 2.0, 4.0), randomDouble(gen, 3.0, 5.0)));
 	}
+
+	Logger::getInstance() << Logger::MODEL << Logger::INFO << "SlotMachine initialized with " << numberOfWheels << " wheels\n";
 }
 
 void SlotMachine::start() {
 	for (auto& wheel : wheels) {
 		wheel.start();
 	}
+	Logger::getInstance() << Logger::MODEL << Logger::INFO << "SlotMachine start\n";
 }
 
 void SlotMachine::stop() {
 	for (auto& wheel : wheels) {
 		wheel.stop();
 	}
+	Logger::getInstance() << Logger::MODEL << Logger::INFO << "SlotMachine stop\n";
 }
 
 bool SlotMachine::spin() {
@@ -53,4 +50,8 @@ std::vector<std::vector<double>> SlotMachine::getPositions() const {
 	return positions;
 }
 
+double SlotMachine::randomDouble(std::mt19937& gen, double min, double max) const {
+	std::uniform_real_distribution<double> dist(min, max);
 
+	return dist(gen);
+}
