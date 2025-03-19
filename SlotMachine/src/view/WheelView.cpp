@@ -4,6 +4,7 @@
 
 #include <iostream>
 
+#define SYMBOLS 3
 #define SEVEN_FILE "seven.png"
 #define LEMON_FILE "lemon.png"
 #define CHERRIES_FILE "cherries.png"
@@ -15,10 +16,6 @@
 void WheelView::loadTexture(sf::Texture& texture, std::string filename) {
 	if (!texture.loadFromFile(filename))
 		throw std::runtime_error("Couldn't load texture from " + filename);
-
-    std::cout << "Loaded texture: " << filename
-        << " | Size: " << texture.getSize().x << "x" << texture.getSize().y
-        << " | Pointer: " << &texture << std::endl;
 }
 
 WheelView::WheelView(sf::Vector2f position, sf::Vector2f windowSize) : view(sf::FloatRect(position, { WIDTH, HEIGHT })), seven(sevenTexture), lemon(lemonTexture), cherries(cherriesTexture),
@@ -39,40 +36,25 @@ WheelView::WheelView(sf::Vector2f position, sf::Vector2f windowSize) : view(sf::
 
 }
 
-void WheelView::update(std::vector<int> positions, double shiftPart) {
-    int shift = round(shiftPart * WIDTH);
+void WheelView::update(std::vector<double> positions) {
 
-    sf::Vector2f sevenPos(0, 0);
-    sf::Vector2f lemonPos(0, 0);
-    sf::Vector2f cherriesPos(0, 0);
-
-    sf::Vector2f seven2Pos(0, 0);
-    sf::Vector2f lemon2Pos(0, 0);
-    sf::Vector2f cherries2Pos(0, 0);
+    //std::cout << shift << '\n';
 
 	for (int i = 0; i < positions.size(); ++i) {
-        if (positions[i] == 0) {
-            sevenPos.y = 200 * i - shift;
-            seven2Pos.y = 200 * i - shift;
-            seven2Pos.y += HEIGHT * (shift < 0 ? -1 : 1);
-        } else if (positions[i] == 1) {
-            lemonPos.y = 200 * i - shift;
-            lemon2Pos.y = 200 * i - shift;
-            lemon2Pos.y += shift < 0 ? -600 : 600;
-        } else if (positions[i] == 2) {
-            cherriesPos.y = 200 * i - shift;
-            cherries2Pos.y = 200 * i - shift;
-            cherries2Pos.y += shift < 0 ? -600 : 600;
+        sf::Vector2f pos(0, round(positions[i] * WIDTH));
+        sf::Vector2f pos2(0, round(positions[i] * WIDTH) + (HEIGHT * (positions[i] >= SYMBOLS - 1 ? -1 : 1)));
+
+        if (i == 0) {
+            seven.setPosition(pos);
+            seven2.setPosition(pos2);
+        } else if (i == 1) {
+            lemon.setPosition(pos);
+            lemon2.setPosition(pos2);
+        } else if (i == 2) {
+            cherries.setPosition(pos);
+            cherries2.setPosition(pos2);
         }
 	}
-
-    seven.setPosition(sevenPos);
-    lemon.setPosition(lemonPos);
-    cherries.setPosition(cherriesPos);
-
-    seven2.setPosition(seven2Pos);
-    lemon2.setPosition(lemon2Pos);
-    cherries2.setPosition(cherries2Pos);
 }
 
 void WheelView::setView(sf::RenderWindow& window) const {
@@ -80,9 +62,7 @@ void WheelView::setView(sf::RenderWindow& window) const {
 }
 
 void WheelView::draw(sf::RenderWindow& window) const {
-    std::cout << "draw\n";
     window.draw(seven);
-    std::cout << "draw 2\n";
     window.draw(lemon);
     window.draw(cherries);
     window.draw(seven2);

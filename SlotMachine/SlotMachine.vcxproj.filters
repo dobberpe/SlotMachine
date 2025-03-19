@@ -57,13 +57,10 @@
     <ClInclude Include="src\model\Wheel.h">
       <Filter>Файлы заголовков\model</Filter>
     </ClInclude>
-    <ClInclude Include="src\model\fsm\AccelerationState.h">
+    <ClInclude Include="src\model\fsm\SpinningState.h">
       <Filter>Файлы заголовков\model\fsm</Filter>
     </ClInclude>
-    <ClInclude Include="src\model\fsm\DecelerationState.h">
-      <Filter>Файлы заголовков\model\fsm</Filter>
-    </ClInclude>
-    <ClInclude Include="src\model\fsm\AlignmentState.h">
+    <ClInclude Include="src\model\fsm\StoppingState.h">
       <Filter>Файлы заголовков\model\fsm</Filter>
     </ClInclude>
     <ClInclude Include="src\model\fsm\ScoringState.h">
@@ -100,13 +97,10 @@
     <ClCompile Include="src\model\fsm\WaitingState.cpp">
       <Filter>Исходные файлы\model\fsm</Filter>
     </ClCompile>
-    <ClCompile Include="src\model\fsm\AccelerationState.cpp">
+    <ClCompile Include="src\model\fsm\SpinningState.cpp">
       <Filter>Исходные файлы\model\fsm</Filter>
     </ClCompile>
-    <ClCompile Include="src\model\fsm\DecelerationState.cpp">
-      <Filter>Исходные файлы\model\fsm</Filter>
-    </ClCompile>
-    <ClCompile Include="src\model\fsm\AlignmentState.cpp">
+    <ClCompile Include="src\model\fsm\StoppingState.cpp">
       <Filter>Исходные файлы\model\fsm</Filter>
     </ClCompile>
     <ClCompile Include="src\model\fsm\ScoringState.cpp">

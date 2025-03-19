@@ -2,7 +2,7 @@
 
 #include "IState.h"
 
-class AccelerationState : public IState {
+class StoppingState : public IState {
 public:
     std::unique_ptr<IState> buttonPressed(SlotMachine& machine) override;
     std::unique_ptr<IState> update(SlotMachine& machine) override;

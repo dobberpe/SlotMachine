@@ -11,6 +11,7 @@ private:
 	SlotMachine machine;
 	FSM fsm;	
 	SMWindow window;
+	bool isSpinning;
 public:
 	SMController();
 	~SMController() = default;

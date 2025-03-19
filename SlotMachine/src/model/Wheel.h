@@ -9,20 +9,27 @@ class Wheel {
 private:
 	int wheelSize;
 	std::vector<int> symbols;
-	int position;
+	double position;
 	std::chrono::steady_clock::time_point lastUpdate;
 	double wheelSpeed; // оборотов в секунду
-	long long timeAccumulator;
+	const double maxSpeed;
+	double realMaxSpeed;
+	double accelFactor; // скорость разгона
+	double decelFactor; // скорость торможения
+	std::chrono::steady_clock::time_point startTime;
+	//long long timeAccumulator;
+	bool spinning;
+	bool slowingDown;
+
 public:
 	Wheel() = delete;
-	Wheel(int sz, std::mt19937 gen, double sp);
+	Wheel(int sz, std::mt19937& gen, double speed, double maxSp, double accF, double decF);
 	~Wheel() = default;
-	std::vector<int> getPosition() const;
+	std::vector<double> getPosition() const;
 	void start();
-	void speedUp();
-	bool speedDown();
 	void stop();
+	void updateSpeed();
 	void spin();
-	double getShift() const;
+	bool isSpinning() const;
 };
 

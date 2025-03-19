@@ -30,7 +30,7 @@ public:
     WheelView(sf::Vector2f position, sf::Vector2f windowSize);
     //WheelView(std::vector<int> sym);
     ~WheelView() = default;
-    void update(std::vector<int> positions, double shiftPart);
+    void update(std::vector<double> positions);
     void setView(sf::RenderWindow& window) const;
     void draw(sf::RenderWindow& window) const;
 };

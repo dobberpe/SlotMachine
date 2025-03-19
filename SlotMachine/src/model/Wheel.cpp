@@ -3,89 +3,80 @@
 #include <numeric>
 #include <iostream>
 
-Wheel::Wheel(int size, std::mt19937 gen, double speed) : wheelSize(size), symbols(size), position(0), wheelSpeed(speed), timeAccumulator(0) {
+Wheel::Wheel(int size, std::mt19937& gen, double speed, double maxSp, double accF, double decF) :
+	wheelSize(size), symbols(size), position(0.0), wheelSpeed(speed), maxSpeed(maxSp),
+	realMaxSpeed(maxSp), accelFactor(accF), decelFactor(decF),
+	startTime(std::chrono::steady_clock::now()), spinning(false),
+	slowingDown(false)/*, timeAccumulator(0)*/ {
 	std::iota(symbols.begin(), symbols.end(), 0);
 	std::shuffle(symbols.begin(), symbols.end(), gen);
 }
 
-std::vector<int> Wheel::getPosition() const {
-	std::vector<int> currentPosition(wheelSize);
+std::vector<double> Wheel::getPosition() const {
+	double positionTmp = position;
+	std::vector<double> currentPosition(wheelSize);
 
-	int j = -1;
-
-	for (int i = position; i < wheelSize; ++i) {
-		currentPosition[++j] = symbols[i];
-	}
-	for (int i = 0; i < position; ++i) {
-		currentPosition[++j] = symbols[i];
+	for (int i = 0; i < wheelSize; ++i) {
+		currentPosition[symbols[i]] = positionTmp++;
+		if (positionTmp >= wheelSize) positionTmp -= wheelSize;
 	}
 
 	return currentPosition;
 }
 
 void Wheel::start() {
-	lastUpdate = std::chrono::steady_clock::now();
-}
-
-void Wheel::speedUp() {
-	wheelSpeed += 0.1;
-}
-
-bool Wheel::speedDown() {
-	const double epsilon = 1e-6;
-	bool stopped = false;
-
-	if (abs(wheelSpeed - 0.2) > epsilon) {
-		wheelSpeed -= 0.1;
-	} else {
-		double shiftPart = (double)timeAccumulator / 1000.0 * wheelSpeed;
-		int shift = round(shiftPart * 200.0);
-
-		if (shift % 200 == 0) {
-			wheelSpeed = 0;
-			position += shift = 200 ? 1 : 0;
-			position %= wheelSize;
-			stopped = true;
-		} else if (shiftPart <= 0.2 && wheelSpeed > -0.2) {
-			wheelSpeed -= 0.1;
-			//std::cout << wheelSpeed << '\n';
-		}
-	}
-
-	return stopped;
+	startTime = std::chrono::steady_clock::now();
+	lastUpdate = startTime;
+	spinning = true;
 }
 
 void Wheel::stop() {
-	wheelSpeed = 0;
+	startTime = std::chrono::steady_clock::now();
+	slowingDown = true;
+	realMaxSpeed = wheelSpeed;
+}
+
+void Wheel::updateSpeed() {
+	auto now = std::chrono::steady_clock::now();
+	double elapsed = std::chrono::duration<double>(now - startTime).count();
+
+	if (spinning && !slowingDown) {
+		wheelSpeed += 0.1;
+		//wheelSpeed = maxSpeed * (1 - std::exp(-accelFactor * elapsed));
+
+		if (wheelSpeed >= maxSpeed) {
+		//if (wheelSpeed >= maxSpeed * 0.999999) {
+			slowingDown = true;
+			startTime = std::chrono::steady_clock::now();
+		}
+	} else if (slowingDown) {
+		wheelSpeed -= 0.1;
+		//wheelSpeed = realMaxSpeed * std::exp(-decelFactor * elapsed);
+
+		if (wheelSpeed <= 0.1) {
+			wheelSpeed = 0.0;
+			spinning = false;
+			slowingDown = false;
+		}
+	}
+	//std::cout << wheelSpeed << "\n";
 }
 
 void Wheel::spin() {
-	double res = 0;
 
 	if (wheelSpeed) {
-
-		std::cout << wheelSpeed << '\n';
 
 		auto now = std::chrono::steady_clock::now();
 		auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastUpdate).count();
 
-		timeAccumulator += elapsed;
+		position += elapsed / 1000.0 * wheelSpeed;
 
-		long long timeToSpin = 1000.0 / wheelSpeed;
-		int turns = int(timeAccumulator / timeToSpin) % wheelSize;
-
-		if (abs(turns) > 0) {
-			position = (position + turns) % wheelSize;
-			if (position < 0) position += wheelSize;
-			timeAccumulator -= timeToSpin * turns;
-		}
+		if (position >= wheelSize) position -= wheelSize;
 
 		lastUpdate = now;
-
-		res = (double)timeAccumulator / timeToSpin;
 	}
 }
 
-double Wheel::getShift() const {
-	return wheelSpeed ? (double)timeAccumulator / 1000.0 * wheelSpeed : 0;
+bool Wheel::isSpinning() const {
+	return spinning;
 }

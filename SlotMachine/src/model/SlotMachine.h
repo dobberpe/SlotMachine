@@ -6,22 +6,19 @@ class SlotMachine {
 private:
 	int numberOfWheels;
 	std::vector<Wheel> wheels;
-	const int accelerationSteps;
-	int accelerationCounter;
-	bool spinning;
+
+	double randomDouble(std::mt19937& gen, double min, double max) const;
 
 public:
 	SlotMachine() = delete;
-	SlotMachine(int numOfWheels, int accSteps);
+	SlotMachine(int numOfWheels);
 	
 	~SlotMachine() = default;
-	//void start();
 	void start();
-	bool accelerate();
-	bool decelerate();
-	void spin();
-	std::vector<std::vector<int>> getPositions() const;
-	std::vector<double> getShifts() const;
-	bool isSpinning() const;
+	void stop();
+	/*bool accelerate();
+	bool decelerate();*/
+	bool spin();
+	std::vector<std::vector<double>> getPositions() const;
 };
 

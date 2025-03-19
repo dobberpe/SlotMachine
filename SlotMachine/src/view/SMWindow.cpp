@@ -53,20 +53,18 @@ bool SMWindow::buttonPressed() const {
 }
 
 void SMWindow::updateButton(bool spin) {
+	//std::cout << (spin ? SPIN : STOP) << '\n';
 	button.setFillColor(spin ? SPIN_COLOR : STOP_COLOR);
 	buttonText.setString(spin ? SPIN : STOP);
 }
 
-void SMWindow::updateWheels(std::vector<std::vector<int>> positions, std::vector<double> shifts) {
-	if (positions.size() == shifts.size() && shifts.size() == wheels.size()) {
-		for (int i = 0; i < positions.size(); ++i) {
-			wheels[i]->update(positions[i], shifts[i]);
-		}
-	} else {
-		std::cout << wheels.size() << '\n';
-		std::cout << positions.size() << '\n';
-		std::cout << shifts.size() << '\n';
+void SMWindow::updateWheels(std::vector<std::vector<double>> positions) {
+	if (positions.size() != wheels.size()) {
 		throw std::runtime_error("Error: View and Model aren't compatible");
+	} else {
+		for (int i = 0; i < positions.size(); ++i) {
+			wheels[i]->update(positions[i]);
+		}
 	}
 }
 

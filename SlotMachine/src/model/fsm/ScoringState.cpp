@@ -7,5 +7,5 @@ std::unique_ptr<IState> ScoringState::buttonPressed(SlotMachine& machine) {
 
 std::unique_ptr<IState> ScoringState::update(SlotMachine& machine) {
 	// считаем
-	return std::unique_ptr<WaitingState>();
+	return std::make_unique<WaitingState>();
 }

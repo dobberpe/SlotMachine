@@ -137,9 +137,8 @@
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\controller\SMController.h" />
-    <ClInclude Include="src\model\fsm\AccelerationState.h" />
-    <ClInclude Include="src\model\fsm\AlignmentState.h" />
-    <ClInclude Include="src\model\fsm\DecelerationState.h" />
+    <ClInclude Include="src\model\fsm\SpinningState.h" />
+    <ClInclude Include="src\model\fsm\StoppingState.h" />
     <ClInclude Include="src\model\fsm\FSM.h" />
     <ClInclude Include="src\model\fsm\IState.h" />
     <ClInclude Include="src\model\fsm\ScoringState.h" />
@@ -155,9 +154,8 @@
   <ItemGroup>
     <ClCompile Include="src\controller\SMController.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\model\fsm\AccelerationState.cpp" />
-    <ClCompile Include="src\model\fsm\AlignmentState.cpp" />
-    <ClCompile Include="src\model\fsm\DecelerationState.cpp" />
+    <ClCompile Include="src\model\fsm\SpinningState.cpp" />
+    <ClCompile Include="src\model\fsm\StoppingState.cpp" />
     <ClCompile Include="src\model\fsm\FSM.cpp" />
     <ClCompile Include="src\model\fsm\ScoringState.cpp" />
     <ClCompile Include="src\model\fsm\WaitingState.cpp" />

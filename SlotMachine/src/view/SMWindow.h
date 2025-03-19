@@ -22,7 +22,7 @@ public:
     void close();
     bool buttonPressed() const;
     void updateButton(bool spin);
-    void updateWheels(std::vector<std::vector<int>> positions, std::vector<double> shifts);
+    void updateWheels(std::vector<std::vector<double>> positions);
     void draw();
 };
 
