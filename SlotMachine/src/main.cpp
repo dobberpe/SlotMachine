@@ -8,7 +8,7 @@ int main() {
         controller.run();
     } catch (std::exception& e) {
         // разместить catch выше
-        Logger::getInstance() << Logger::CONTROLLER << Logger::ERROR << e.what();
+        Logger::getInstance() << Logger::CONTROLLER << Logger::ERROR << e.what() << '\n';
         //std::cerr << e.what() << '\n';
     }
 

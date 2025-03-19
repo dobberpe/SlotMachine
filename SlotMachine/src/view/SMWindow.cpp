@@ -2,8 +2,6 @@
 
 #include <exception>
 
-#include <iostream>
-
 #define BUTTON_SIZE { 200, 200 }
 #define FONT_FILE "assets/fonts/arial.ttf"
 #define BUTTON_POS { 500, 800 }
@@ -25,7 +23,6 @@ SMWindow::SMWindow(sf::Vector2u windowSize, int numberOfWheels) :
 	button.setPosition(BUTTON_POS);
 	button.setFillColor(SPIN_COLOR);
 
-	//buttonText.setFont(font);
 	buttonText.setString(SPIN);
 	buttonText.setCharacterSize(BUTTON_TEXT_FONT_SIZE);
 	buttonText.setFillColor(sf::Color::White);
@@ -53,7 +50,6 @@ bool SMWindow::buttonPressed() const {
 }
 
 void SMWindow::updateButton(bool spin) {
-	//std::cout << (spin ? SPIN : STOP) << '\n';
 	button.setFillColor(spin ? SPIN_COLOR : STOP_COLOR);
 	buttonText.setString(spin ? SPIN : STOP);
 }

@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#define WHEELS 1
+#define WHEELS 3
 //#define ACCELERATION_STEPS 150
 #define WINDOW_SIZE { 1200, 1000 }
 
