@@ -26,6 +26,8 @@ private:
     Logger();
     
     ~Logger();
+
+    void createDirectoryIfNotExist();
     
     std::ofstream& getLogFile(LogType type);
     

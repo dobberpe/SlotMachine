@@ -37,6 +37,8 @@ Logger& Logger::operator<<(LogLevel level) {
 }
 
 Logger::Logger() {
+	createDirectoryIfNotExist();
+
 	controllerFile.open("logs/controller.log", std::ios::app);
 	viewFile.open("logs/view.log", std::ios::app);
 	modelFile.open("logs/model.log", std::ios::app);
@@ -52,6 +54,14 @@ Logger::~Logger() {
 	if (controllerFile.is_open()) controllerFile.close();
 	if (viewFile.is_open()) viewFile.close();
 	if (modelFile.is_open()) modelFile.close();
+}
+
+void Logger::createDirectoryIfNotExist() {
+	if (!std::filesystem::exists("logs")) {
+		if (!std::filesystem::create_directory("logs")) {
+			throw std::runtime_error("Error: Couldn't create logs directory");
+		}
+	}
 }
 
 std::ofstream& Logger::getLogFile(LogType type) {
