@@ -8,7 +8,9 @@
 class SMController {
 public:
 	SMController();
+
 	~SMController() = default;
+	
 	void run();
 
 private:
@@ -16,4 +18,6 @@ private:
 	FSM fsm;	
 	SMWindow window;
 	bool isSpinning;
+	static constexpr int WHEELS = 3;
+	static constexpr sf::Vector2u WINDOW_SIZE{ 1200, 1000 };
 };

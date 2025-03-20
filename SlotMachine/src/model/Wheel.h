@@ -1,38 +1,53 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
 #include <vector>
 #include <chrono>
 #include <random>
 
 class Wheel {
+public:
+	Wheel() = delete;
+	
+	Wheel(int sz, std::mt19937& gen, double speed, double maxSp, double accF, double decF);
+	
+	~Wheel() = default;
+	
+	std::vector<double> getPosition() const;
+	
+	void start();
+	
+	void stop();
+	
+	void updateSpeed();
+	
+	void speedUp(double elapsed);
+	
+	void speedDown(double elapsed);
+	
+	void align(double elapsed);
+	
+	void spin();
+	
+	bool isSpinning() const;
+	
+	bool isSlowing() const;
+
 private:
-	int wheelSize;
+	bool stopped() const;
+	
+	const int wheelSize;
 	std::vector<int> symbols;
 	double position;
 	std::chrono::steady_clock::time_point lastUpdate;
-	double wheelSpeed; // оборотов в секунду
+	double wheelSpeed;			// оборотов в секунду
 	const double maxSpeed;
 	double realMaxSpeed;
-	double accelFactor; // скорость разгона
-	double decelFactor; // скорость торможения
+	const double accelFactor;	// скорость разгона
+	const double decelFactor;	// скорость торможения
 	std::chrono::steady_clock::time_point startTime;
 	bool spinning;
 	bool slowingDown;
 	bool stopping;
 	bool backwards;
-
-	bool stopped() const;
-
-public:
-	Wheel() = delete;
-	Wheel(int sz, std::mt19937& gen, double speed, double maxSp, double accF, double decF);
-	~Wheel() = default;
-	std::vector<double> getPosition() const;
-	void start();
-	void stop();
-	void updateSpeed();
-	void spin();
-	bool isSpinning() const;
 };
 

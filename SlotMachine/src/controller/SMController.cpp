@@ -1,10 +1,5 @@
 #include "SMController.h"
-
-#include <iostream>
-
-#define WHEELS 3
-//#define ACCELERATION_STEPS 150
-#define WINDOW_SIZE { 1200, 1000 }
+#include "../utils/Logger.h"
 
 SMController::SMController() : machine(WHEELS), window(WINDOW_SIZE, WHEELS), isSpinning(false) {}
 
@@ -15,15 +10,16 @@ void SMController::run() {
                 window.close();
             if (event->is<sf::Event::MouseButtonPressed>()) {
                 if (window.buttonPressed()) {
-                    std::cout << "pressed\n";
                     fsm.buttonPressed(machine);
-                    isSpinning = !isSpinning;
-                    window.updateButton(!isSpinning);
                 }
             }
         }
 
         fsm.update(machine);
+        if (fsm.active() != isSpinning) {
+            isSpinning = !isSpinning;
+            window.updateButton(!isSpinning);
+        }
         window.updateWheels(machine.getPositions());
         window.draw();
 	}

@@ -1,16 +1,7 @@
 #include "SMWindow.h"
+#include "../utils/Logger.h"
 
 #include <exception>
-
-#define BUTTON_SIZE { 200, 200 }
-#define FONT_FILE "assets/fonts/arial.ttf"
-#define BUTTON_POS { 500, 800 }
-#define SPIN "SPIN"
-#define STOP "STOP"
-#define SPIN_COLOR sf::Color::Blue
-#define STOP_COLOR sf::Color::Red
-#define BUTTON_TEXT_POS { 550, 850 }
-#define BUTTON_TEXT_FONT_SIZE 24
 
 SMWindow::SMWindow(sf::Vector2u windowSize, int numberOfWheels) :
 	window(sf::VideoMode(windowSize), "Cyclic Image Display"),
@@ -23,7 +14,7 @@ SMWindow::SMWindow(sf::Vector2u windowSize, int numberOfWheels) :
 	button.setPosition(BUTTON_POS);
 	button.setFillColor(SPIN_COLOR);
 
-	buttonText.setString(SPIN);
+	buttonText.setString(SPIN.data());
 	buttonText.setCharacterSize(BUTTON_TEXT_FONT_SIZE);
 	buttonText.setFillColor(sf::Color::White);
 	buttonText.setPosition(BUTTON_TEXT_POS);
@@ -51,7 +42,7 @@ bool SMWindow::buttonPressed() const {
 
 void SMWindow::updateButton(bool spin) {
 	button.setFillColor(spin ? SPIN_COLOR : STOP_COLOR);
-	buttonText.setString(spin ? SPIN : STOP);
+	buttonText.setString(spin ? SPIN.data() : STOP.data());
 }
 
 void SMWindow::updateWheels(std::vector<std::vector<double>> positions) {

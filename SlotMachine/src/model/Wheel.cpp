@@ -3,13 +3,6 @@
 
 #include <numeric>
 
-bool Wheel::stopped() const {
-	double fractional = position - std::floor(position);
-	constexpr double epsilon = 0.0025;
-
-	return fractional < epsilon || 1.0 - fractional < epsilon;
-}
-
 Wheel::Wheel(int size, std::mt19937& gen, double speed, double maxSp, double accF, double decF) :
 	wheelSize(size), symbols(size), position(0.0), wheelSpeed(speed), maxSpeed(maxSp),
 	realMaxSpeed(maxSp), accelFactor(accF), decelFactor(decF),
@@ -19,6 +12,12 @@ Wheel::Wheel(int size, std::mt19937& gen, double speed, double maxSp, double acc
 	std::shuffle(symbols.begin(), symbols.end(), gen);
 
 	Logger::getInstance() << Logger::MODEL << Logger::INFO << "Wheel initialized with " << wheelSize << " symbols, speed = " << wheelSpeed << ", maxSpeed = " << maxSpeed << ", accelFactor = " << accelFactor << ", decelFactor = " << decelFactor << "\n";
+	Logger::getInstance() << Logger::MODEL << Logger::INFO << "Symbols order: ";
+
+	for (const auto& sym : symbols) {
+		Logger::getInstance() << sym;
+	}
+	Logger::getInstance() << '\n';
 }
 
 std::vector<double> Wheel::getPosition() const {
@@ -36,6 +35,7 @@ std::vector<double> Wheel::getPosition() const {
 void Wheel::start() {
 	startTime = std::chrono::steady_clock::now();
 	lastUpdate = startTime;
+	realMaxSpeed = maxSpeed;
 	spinning = true;
 }
 
@@ -48,45 +48,51 @@ void Wheel::stop() {
 void Wheel::updateSpeed() {
 	auto now = std::chrono::steady_clock::now();
 	double elapsed = std::chrono::duration<double>(now - startTime).count();
-
 	
-
 	if (spinning && !slowingDown && !stopping) {
-		wheelSpeed = maxSpeed * (1 - std::exp(-accelFactor * elapsed));
-
-		if (wheelSpeed >= maxSpeed * 0.99999) {
-			slowingDown = true;
-			startTime = std::chrono::steady_clock::now();
-		}
+		speedUp(elapsed);
 	} else if (slowingDown) {
-		wheelSpeed = realMaxSpeed * std::exp(-decelFactor * elapsed);
-
-		if (wheelSpeed <= 0.4 && wheelSpeed > 0.2) {
-			double fractional = position - std::floor(position);
-			constexpr double threshold = 0.33;
-
-			backwards = fractional < threshold;
-		} else if (wheelSpeed < 0.2) {
-			realMaxSpeed = wheelSpeed * (backwards ? -1 : 1);
-			startTime = std::chrono::steady_clock::now();
-			wheelSpeed = 0.0;
-			slowingDown = false;
-			stopping = true;
-
-		}
-
+		speedDown(elapsed);
 	} else if (stopping) {
+		align(elapsed);
+	}
+}
 
-		if (stopped()) {
-			wheelSpeed = 0.0;
-			spinning = false;
-			stopping = false;
+void Wheel::speedUp(double elapsed) {
+	wheelSpeed = maxSpeed * (1 - std::exp(-accelFactor * elapsed));
+
+	if (wheelSpeed >= maxSpeed * 0.99999) {
+		slowingDown = true;
+		startTime = std::chrono::steady_clock::now();
+	}
+}
+
+void Wheel::speedDown(double elapsed) {
+	wheelSpeed = realMaxSpeed * std::exp(-decelFactor * elapsed);
+
+	if (wheelSpeed <= 0.4 && wheelSpeed > 0.2) {
+		double fractional = position - std::floor(position);
+		constexpr double threshold = 0.33;
+		backwards = fractional < threshold;
+	} else if (wheelSpeed < 0.2) {
+		realMaxSpeed = wheelSpeed * (backwards ? -1 : 1);
+		startTime = std::chrono::steady_clock::now();
+		wheelSpeed = 0.0;
+		slowingDown = false;
+		stopping = true;
+	}
+}
+
+void Wheel::align(double elapsed) {
+	if (stopped()) {
+		wheelSpeed = 0.0;
+		spinning = false;
+		stopping = false;
+	} else {
+		if (backwards) {
+			wheelSpeed = realMaxSpeed * (1 - std::exp(-accelFactor * elapsed));
 		} else {
-			if (backwards) {
-				wheelSpeed = realMaxSpeed * (1 - std::exp(-accelFactor * elapsed));
-			} else {
-				wheelSpeed = realMaxSpeed * std::pow(0.9, elapsed);
-			}
+			wheelSpeed = realMaxSpeed * std::pow(0.9, elapsed);
 		}
 	}
 }
@@ -94,11 +100,10 @@ void Wheel::updateSpeed() {
 void Wheel::spin() {
 
 	if (wheelSpeed) {
-
 		auto now = std::chrono::steady_clock::now();
-		auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastUpdate).count();
+		auto elapsed = std::chrono::duration<double>(now - lastUpdate).count();
 
-		position += elapsed / 1000.0 * wheelSpeed;
+		position += elapsed * wheelSpeed;
 
 		if (position >= wheelSize) position -= wheelSize;
 
@@ -108,4 +113,15 @@ void Wheel::spin() {
 
 bool Wheel::isSpinning() const {
 	return spinning;
+}
+
+bool Wheel::isSlowing() const {
+	return slowingDown || stopping || !spinning;
+}
+
+bool Wheel::stopped() const {
+	double fractional = position - std::floor(position);
+	constexpr double epsilon = 0.0025;
+
+	return fractional < epsilon || 1.0 - fractional < epsilon;
 }

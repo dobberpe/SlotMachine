@@ -1,20 +1,24 @@
 ﻿#include "SlotMachine.h"
 #include "../utils/Logger.h"
 
-#define SYMBOLS 3
+SlotMachine::SlotMachine(int numOfWheels) : numberOfWheels(numOfWheels),
+	startedSlowing(std::optional<bool>(false)) {
+	std::mt19937 gen(std::random_device{}());
 
-SlotMachine::SlotMachine(int numOfWheels) : numberOfWheels(numOfWheels) {
-	std::random_device rd;
-	std::mt19937 gen(rd());
+	wheels.reserve(numberOfWheels);
 
 	for (int i = 0; i < numberOfWheels; ++i) {
-		wheels.push_back(Wheel(SYMBOLS, gen, 0.0, randomDouble(gen, 12.0, 15.0), randomDouble(gen, 2.0, 4.0), randomDouble(gen, 3.0, 5.0)));
+		wheels.push_back(Wheel(SYMBOLS, gen, 0.0,
+						randomDouble(gen, 12.0, 15.0),
+						randomDouble(gen, 2.0, 4.0),
+						randomDouble(gen, 3.0, 5.0)));
 	}
 
 	Logger::getInstance() << Logger::MODEL << Logger::INFO << "SlotMachine initialized with " << numberOfWheels << " wheels\n";
 }
 
 void SlotMachine::start() {
+	startedSlowing = std::optional<bool>(false);
 	for (auto& wheel : wheels) {
 		wheel.start();
 	}
@@ -29,15 +33,26 @@ void SlotMachine::stop() {
 }
 
 bool SlotMachine::spin() {
+	if (startedSlowing.has_value() && *startedSlowing) {
+		startedSlowing = std::nullopt;
+	}
+
+	int slowing = 0;
 	int stopped = 0;
 
 	for (auto& wheel : wheels) {
 		wheel.spin();
 		wheel.updateSpeed();
+		if (wheel.isSlowing()) ++slowing;
 		if (!wheel.isSpinning()) ++stopped;
 	}
 
-	return stopped == numberOfWheels;
+	if (startedSlowing.has_value() && slowing == numberOfWheels) {
+		*startedSlowing = true;
+	}
+
+	return stopped == numberOfWheels ||
+		(startedSlowing.has_value() && *startedSlowing);
 }
 
 std::vector<std::vector<double>> SlotMachine::getPositions() const {

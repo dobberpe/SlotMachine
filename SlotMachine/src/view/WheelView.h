@@ -1,9 +1,9 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-//#include <vector>
-//#include <unordered_map>
 #include <string>
+#include <vector>
+#include <utility>
 
 class WheelView {
 public:
@@ -14,7 +14,6 @@ public:
     WheelView& operator=(const WheelView&) = delete;
 
     WheelView(WheelView&&) = delete;
-
     
     WheelView& operator=(WheelView&&) = delete;
     
@@ -32,15 +31,15 @@ private:
     void loadTexture(sf::Texture& texture, std::string filename);
 
     sf::View view;
-    sf::Texture sevenTexture;
-    sf::Texture lemonTexture;
-    sf::Texture cherriesTexture;
-    sf::Sprite seven;
-    sf::Sprite lemon;
-    sf::Sprite cherries;
-    sf::Sprite seven2;
-    sf::Sprite lemon2;
-    sf::Sprite cherries2;
+    std::array<sf::Texture, 3> textures;
+    std::vector<std::pair<sf::Sprite, sf::Sprite>> icons;
     double x;
+
+    static constexpr int SYMBOLS = 3;
+    static constexpr int WIDTH = 200;
+    static constexpr int HEIGHT = 600;
+    static constexpr std::array<std::string_view, 3> texture_paths{ "assets/img/seven.png",
+                                                                    "assets/img/lemon.png",
+                                                                    "assets/img/cherries.png"};
 };
 
