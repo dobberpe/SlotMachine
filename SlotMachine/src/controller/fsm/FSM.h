@@ -8,11 +8,9 @@ public:
 	
 	~FSM() = default;
 	
-	void buttonPressed(SlotMachine& machine);
+	void buttonPressed(SlotMachine& machine, SMWindow& window);
 	
-	void update(SlotMachine& machine);
-
-	bool active() const;
+	void update(SlotMachine& machine, SMWindow& window);
 
 private:
 	std::unique_ptr<IState> state;

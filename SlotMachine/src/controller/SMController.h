@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../model/fsm/FSM.h"
+#include "fsm/FSM.h"
 #include "../view/SMWindow.h"
 
 #include <memory>

@@ -19,9 +19,6 @@
     <Filter Include="Исходные файлы\model">
       <UniqueIdentifier>{05104aa0-16af-4d3a-af55-0d5e8ff5d862}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Исходные файлы\model\fsm">
-      <UniqueIdentifier>{27b7de22-51b7-4ab3-a2ea-8b6a5e3eb915}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Исходные файлы\view">
       <UniqueIdentifier>{21bc47af-5e7e-402e-af2b-94a82f019929}</UniqueIdentifier>
     </Filter>
@@ -34,14 +31,17 @@
     <Filter Include="Файлы заголовков\view">
       <UniqueIdentifier>{bd0c57c2-ede3-41eb-8e90-52442aeaa89d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы заголовков\model\fsm">
-      <UniqueIdentifier>{bdb9e570-c76b-4fe3-863b-0db065420f01}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Исходные файлы\utils">
       <UniqueIdentifier>{d9b44218-100d-4777-905a-2b0610ed1bc2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Файлы заголовков\utils">
       <UniqueIdentifier>{9405225b-c066-40b4-9bae-e7cc364b532e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\controller\fsm">
+      <UniqueIdentifier>{27b7de22-51b7-4ab3-a2ea-8b6a5e3eb915}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\controller\fsm">
+      <UniqueIdentifier>{bdb9e570-c76b-4fe3-863b-0db065420f01}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -51,26 +51,11 @@
     <ClInclude Include="src\controller\SMController.h">
       <Filter>Файлы заголовков\controller</Filter>
     </ClInclude>
-    <ClInclude Include="src\model\fsm\IState.h">
-      <Filter>Файлы заголовков\model\fsm</Filter>
-    </ClInclude>
-    <ClInclude Include="src\model\fsm\WaitingState.h">
-      <Filter>Файлы заголовков\model\fsm</Filter>
-    </ClInclude>
     <ClInclude Include="src\model\SlotMachine.h">
       <Filter>Файлы заголовков\model</Filter>
     </ClInclude>
     <ClInclude Include="src\model\Wheel.h">
       <Filter>Файлы заголовков\model</Filter>
-    </ClInclude>
-    <ClInclude Include="src\model\fsm\SpinningState.h">
-      <Filter>Файлы заголовков\model\fsm</Filter>
-    </ClInclude>
-    <ClInclude Include="src\model\fsm\StoppingState.h">
-      <Filter>Файлы заголовков\model\fsm</Filter>
-    </ClInclude>
-    <ClInclude Include="src\model\fsm\ScoringState.h">
-      <Filter>Файлы заголовков\model\fsm</Filter>
     </ClInclude>
     <ClInclude Include="src\view\SMWindow.h">
       <Filter>Файлы заголовков\view</Filter>
@@ -78,11 +63,26 @@
     <ClInclude Include="src\view\WheelView.h">
       <Filter>Файлы заголовков\view</Filter>
     </ClInclude>
-    <ClInclude Include="src\model\fsm\FSM.h">
-      <Filter>Файлы заголовков\model\fsm</Filter>
-    </ClInclude>
     <ClInclude Include="src\utils\Logger.h">
       <Filter>Файлы заголовков\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\controller\fsm\FSM.h">
+      <Filter>Файлы заголовков\controller\fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="src\controller\fsm\IState.h">
+      <Filter>Файлы заголовков\controller\fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="src\controller\fsm\ScoringState.h">
+      <Filter>Файлы заголовков\controller\fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="src\controller\fsm\SpinningState.h">
+      <Filter>Файлы заголовков\controller\fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="src\controller\fsm\StoppingState.h">
+      <Filter>Файлы заголовков\controller\fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="src\controller\fsm\WaitingState.h">
+      <Filter>Файлы заголовков\controller\fsm</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -100,32 +100,32 @@
     <ClCompile Include="src\model\Wheel.cpp">
       <Filter>Исходные файлы\model</Filter>
     </ClCompile>
-    <ClCompile Include="src\model\fsm\WaitingState.cpp">
-      <Filter>Исходные файлы\model\fsm</Filter>
-    </ClCompile>
-    <ClCompile Include="src\model\fsm\SpinningState.cpp">
-      <Filter>Исходные файлы\model\fsm</Filter>
-    </ClCompile>
-    <ClCompile Include="src\model\fsm\StoppingState.cpp">
-      <Filter>Исходные файлы\model\fsm</Filter>
-    </ClCompile>
-    <ClCompile Include="src\model\fsm\ScoringState.cpp">
-      <Filter>Исходные файлы\model\fsm</Filter>
-    </ClCompile>
     <ClCompile Include="src\view\SMWindow.cpp">
       <Filter>Исходные файлы\view</Filter>
     </ClCompile>
     <ClCompile Include="src\view\WheelView.cpp">
       <Filter>Исходные файлы\view</Filter>
     </ClCompile>
-    <ClCompile Include="src\model\fsm\FSM.cpp">
-      <Filter>Исходные файлы\model\fsm</Filter>
-    </ClCompile>
     <ClCompile Include="src\utils\Logger.cpp">
       <Filter>Исходные файлы\utils</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\controller\fsm\FSM.cpp">
+      <Filter>Исходные файлы\controller\fsm</Filter>
+    </ClCompile>
+    <ClCompile Include="src\controller\fsm\ScoringState.cpp">
+      <Filter>Исходные файлы\controller\fsm</Filter>
+    </ClCompile>
+    <ClCompile Include="src\controller\fsm\SpinningState.cpp">
+      <Filter>Исходные файлы\controller\fsm</Filter>
+    </ClCompile>
+    <ClCompile Include="src\controller\fsm\StoppingState.cpp">
+      <Filter>Исходные файлы\controller\fsm</Filter>
+    </ClCompile>
+    <ClCompile Include="src\controller\fsm\WaitingState.cpp">
+      <Filter>Исходные файлы\controller\fsm</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

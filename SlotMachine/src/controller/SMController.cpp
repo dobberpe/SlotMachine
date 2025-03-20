@@ -4,23 +4,20 @@
 SMController::SMController() : machine(WHEELS), window(WINDOW_SIZE, WHEELS), isSpinning(false) {}
 
 void SMController::run() {
+    window.updateWheels(machine.getPositions());
+    window.draw();
+
 	while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>())
                 window.close();
             if (event->is<sf::Event::MouseButtonPressed>()) {
                 if (window.buttonPressed()) {
-                    fsm.buttonPressed(machine);
+                    fsm.buttonPressed(machine, window);
                 }
             }
         }
 
-        fsm.update(machine);
-        if (fsm.active() != isSpinning) {
-            isSpinning = !isSpinning;
-            window.updateButton(!isSpinning);
-        }
-        window.updateWheels(machine.getPositions());
-        window.draw();
+        fsm.update(machine, window);
 	}
 }
