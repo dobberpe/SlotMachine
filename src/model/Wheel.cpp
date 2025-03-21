@@ -106,8 +106,9 @@ void Wheel::align(double elapsed) {
 		wheelSpeed = 0.0;
 		spinning = false;
 		stopping = false;
+		position = round(position);
 	} else {
-		wheelSpeed = realMaxSpeed * (1 - std::exp(-accelFactor * elapsed));
+ 			wheelSpeed = realMaxSpeed * (1 - std::exp(-accelFactor * elapsed));
 	}
 }
 
@@ -157,7 +158,7 @@ int Wheel::getCentral() const {
 bool Wheel::stopped() const {
 
 	double fractional = position - std::floor(position);
-	constexpr double epsilon = 0.0025;
+	constexpr double epsilon = 0.005;
 
 	return fractional < epsilon || 1.0 - fractional < epsilon;
 }
