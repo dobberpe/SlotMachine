@@ -19,5 +19,5 @@ private:
 	SMWindow window;
 	bool isSpinning;
 	static constexpr int WHEELS = 3;
-	static constexpr sf::Vector2u WINDOW_SIZE{ 1200, 1000 };
+	static constexpr sf::Vector2u WINDOW_SIZE{ 1200, 750 };
 };

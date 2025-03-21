@@ -8,7 +8,7 @@ public:
 	
 	~FSM() = default;
 	
-	void buttonPressed(SlotMachine& machine, SMWindow& window);
+	void buttonPressed(SlotMachine& machine, SMWindow& window, bool spin);
 	
 	void update(SlotMachine& machine, SMWindow& window);
 

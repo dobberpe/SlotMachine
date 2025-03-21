@@ -13,7 +13,9 @@ Logger& Logger::getInstance() {
 void Logger::log(LogType type, LogLevel level, const std::string& message) {
 
 	std::ofstream& logFile = getLogFile(type);
-	if (!logFile.is_open()) throw std::runtime_error("Error: Log file is closed");
+	if (!logFile.is_open()) {
+		throw std::runtime_error("Error: Log file is closed");
+	}
 
 	logFile << "[" << getCurrentTime() << "] "
 		<< "[" << logLevelToString(level) << "] "
@@ -114,7 +116,8 @@ void Logger::checkLogFileSize(LogType type) {
 	if (std::filesystem::exists(filename) &&
 		std::filesystem::file_size(filename) >= MAX_LOG_FILE_SIZE) {
 		std::ofstream logFile(filename, std::ios::trunc);
-		logFile << "[LOG RESET] File size exceeded " << MAX_LOG_FILE_SIZE << " bytes.\n";
+		logFile << "[LOG RESET] File size exceeded " << MAX_LOG_FILE_SIZE <<
+			" bytes.\n";
 	}
 }
 

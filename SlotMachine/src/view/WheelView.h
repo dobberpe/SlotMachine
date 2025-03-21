@@ -5,7 +5,7 @@
 #include <vector>
 #include <utility>
 
-class WheelView {
+class WheelView : public sf::Drawable {
 public:
     WheelView() = delete;
 
@@ -22,10 +22,9 @@ public:
     ~WheelView() = default;
     
     void update(std::vector<double> positions);
-    
-    void setView(sf::RenderWindow& window) const;
-    
-    void draw(sf::RenderWindow& window) const;
+
+protected:
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 private:
     void loadTexture(sf::Texture& texture, std::string filename);
@@ -33,13 +32,19 @@ private:
     sf::View view;
     std::array<sf::Texture, 3> textures;
     std::vector<std::pair<sf::Sprite, sf::Sprite>> icons;
+    sf::Texture backgroundTexture;
+    mutable sf::Sprite background;
     double x;
 
     static constexpr int SYMBOLS = 3;
-    static constexpr int WIDTH = 200;
-    static constexpr int HEIGHT = 600;
-    static constexpr std::array<std::string_view, 3> texture_paths{ "assets/img/seven.png",
-                                                                    "assets/img/lemon.png",
-                                                                    "assets/img/cherries.png"};
+    static constexpr int SYMBOL_SHIFT = 25;
+    static constexpr int WIDTH = 250;
+    static constexpr int HEIGHT = 750;
+    static constexpr std::array<std::string_view, 3> texture_paths{
+        "assets/img/seven.png",
+        "assets/img/lemon.png",
+        "assets/img/cherries.png"
+    };
+    static constexpr std::string_view BACKGROUND_FILE = "assets/img/back.jpg";
 };
 

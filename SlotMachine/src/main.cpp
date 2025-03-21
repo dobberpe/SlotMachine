@@ -6,7 +6,9 @@ int main() {
         SMController controller;
         controller.run();
     } catch (std::exception& e) {
-        Logger::getInstance() << Logger::CONTROLLER << Logger::ERROR << e.what() << '\n';
+        Logger::getInstance() <<    Logger::CONTROLLER <<
+                                    Logger::ERROR <<
+                                    e.what() << '\n';
     }
 
     return 0;

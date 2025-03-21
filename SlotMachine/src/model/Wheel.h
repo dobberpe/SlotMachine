@@ -8,7 +8,8 @@ class Wheel {
 public:
 	Wheel() = delete;
 	
-	Wheel(int sz, std::mt19937& gen, double speed, double maxSp, double accF, double decF);
+	Wheel(int sz, std::mt19937& gen, double speed, double maxSp,
+		double accF, double decF);
 	
 	~Wheel() = default;
 	
@@ -31,6 +32,8 @@ public:
 	bool isSpinning() const;
 	
 	bool isSlowing() const;
+
+	int getCentral() const;
 
 private:
 	bool stopped() const;

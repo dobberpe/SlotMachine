@@ -84,6 +84,12 @@
     <ClInclude Include="src\controller\fsm\WaitingState.h">
       <Filter>Файлы заголовков\controller\fsm</Filter>
     </ClInclude>
+    <ClInclude Include="src\view\RoundedRect.h">
+      <Filter>Файлы заголовков\view</Filter>
+    </ClInclude>
+    <ClInclude Include="src\view\ScoreCounter.h">
+      <Filter>Файлы заголовков\view</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SlotMachine.rc">
@@ -126,6 +132,12 @@
     </ClCompile>
     <ClCompile Include="src\controller\fsm\WaitingState.cpp">
       <Filter>Исходные файлы\controller\fsm</Filter>
+    </ClCompile>
+    <ClCompile Include="src\view\RoundedRect.cpp">
+      <Filter>Исходные файлы\view</Filter>
+    </ClCompile>
+    <ClCompile Include="src\view\ScoreCounter.cpp">
+      <Filter>Исходные файлы\view</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -18,6 +18,8 @@ public:
 	
 	bool spin();
 
+	short getScore() const;
+
 	std::vector<std::vector<double>> getPositions() const;
 
 private:

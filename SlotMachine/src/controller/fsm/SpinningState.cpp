@@ -4,22 +4,38 @@
 
 #include <iostream>
 
-std::unique_ptr<IState> SpinningState::buttonPressed(SlotMachine& machine, SMWindow& window) {
-	machine.stop();
-	machine.spin();
+std::unique_ptr<IState> SpinningState::buttonPressed(SlotMachine& machine,
+	SMWindow& window, bool spin) {
 
-	window.updateButton(true);
+	if (!spin) {
+		machine.stop();
+		machine.spin();
 
-	Logger::getInstance() << Logger::MODEL << Logger::INFO << "button pressed >> Stopping state\n";
+		window.pressStopButton();
 
-	return std::make_unique<StoppingState>();
+		Logger::getInstance() <<	Logger::CONTROLLER <<
+									Logger::INFO <<
+									"button pressed >> Stopping state\n";
+
+		return std::make_unique<StoppingState>();
+	}
+
+	return nullptr;
 }
 
-std::unique_ptr<IState> SpinningState::update(SlotMachine& machine, SMWindow& window) {
+std::unique_ptr<IState> SpinningState::update(SlotMachine& machine,
+	SMWindow& window) {
+
 	if (machine.spin()) {
-		Logger::getInstance() << Logger::MODEL << Logger::INFO << "Stopping state\n";
-		window.updateButton(true);
+		Logger::getInstance() <<	Logger::CONTROLLER <<
+									Logger::INFO <<
+									"Stopping state\n";
+
 		return std::make_unique<StoppingState>();
+	}
+
+	if (window.spinButtonInPressedState()) {
+		window.unpressSpinButton();
 	}
 
 	window.updateWheels(machine.getPositions());
