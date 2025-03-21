@@ -4,18 +4,18 @@
 
 ## Структура проекта
 
-SlotMachine/
-├── SFML-3.0.0/
-├── assets/
-│ ├── img/
-│ ├── fonts/
-├── build/
-├── src/
-│ ├── model/
-│ ├── view/
-│ ├── controller/
-│ │ ├── fsm/
-├── Makefile
+SlotMachine/  
+├── SFML-3.0.0/  
+├── assets/  
+│ ├── img/  
+│ ├── fonts/  
+├── build/  
+├── src/  
+│ ├── model/  
+│ ├── view/  
+│ ├── controller/  
+│ │ ├── fsm/  
+├── Makefile  
 
 - `SFML-3.0.0/` содержит файлы библиотеки SFML (как заголовочные файлы, так и библиотеки).
 - `src/` содержит исходный код, организованный по компонентам модели, представления и контроллера.
