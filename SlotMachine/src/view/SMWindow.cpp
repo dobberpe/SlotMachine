@@ -11,6 +11,13 @@ SMWindow::SMWindow(sf::Vector2u windowSize, int numberOfWheels) :
 	spinButtonText(font), stopButtonText(font), spinButtonPressTimer(0),
 	stopButtonPressTimer(0), scoreCounter(SCORE_COUNTER_POS) {
 
+	sf::Image icon;
+	if (!icon.loadFromFile(ICON_FILE.data())) {
+		throw std::runtime_error("Error: Couldn't open icon file");
+	}
+
+	window.setIcon(icon);
+
 	window.setFramerateLimit(60);
 
 	combinationFrame.setFillColor(FRAME_COLOR);

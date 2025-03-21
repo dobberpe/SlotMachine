@@ -83,6 +83,7 @@ private:
     static constexpr std::string_view FONT_FILE = "assets/fonts/impact.ttf";
     static constexpr std::string_view SPIN_FILE = "assets/img/blue_button.png";
     static constexpr std::string_view STOP_FILE = "assets/img/red_button.png";
+    static constexpr std::string_view ICON_FILE = "assets/img/seven.png";
     
 };
 
